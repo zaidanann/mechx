@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MechX</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="/index">
+            <img src="/image/logonavbar.png" alt="Logo Navbar" style="cursor: pointer;">
+        </a>        
+        <div class="nav">
+            <a href="/fixtol">Fix Tool</a>
+            <a href="/comunity">Community</a>
+            <a href="/keranjang">Store</a>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Find what you want..."/>
+            <i class="fas fa-search"></i>
+        </div>
+        <div class="icons">
+            <a href="/store"><i class="fas fa-shopping-cart"></i></a>
+            <a href="/register">Log-out  |</a>
+            <a href="/login">Log-In</a>
+        </div>
+    </div>
+    <div class="container12">
+        <h1>Keranjang Belanja</h1>
+        <div class="cart-header">
+            <div>Produk</div>
+            <div>Harga Satuan</div>
+            <div>Kuantitas</div>
+            <div>Total Harga</div>
+        </div>
+        <div class="cart-item">
+            <input type="checkbox" class="item-checkbox">
+            <img src="https://s1.bukalapak.com/img/10938505562/large/uma_pcx.jpg" alt="Adaptor 24v 1a Power Supply" width="100" height="100">
+            <div class="details">
+                <h3>Roller PCX 160 200kg</h3>
+                <p>Jawa.store</p>
+            </div>
+            <div class="price">Rp200,000</div>
+            <div class="quantity">
+                <input type="number" value="1" min="1" class="item-quantity">
+            </div>
+            <div class="total">Rp19,590</div>
+        </div>
+        <div class="cart-item">
+            <input type="checkbox" class="item-checkbox">
+            <img src="https://xten.id/wp-content/uploads/XT-30-MATIC-664x1024.png" alt="Adaptor 24v 1a Power Supply" width="100" height="100">
+            <div class="details">
+                <h3>Oli Susu kental manis</h3>
+                <p>Jawa.store</p>
+            </div>
+            <div class="price">Rp100,000,000</div>
+            <div class="quantity">
+                <input type="number" value="1" min="1" class="item-quantity">
+            </div>
+            <div class="total">Rp19,590</div>
+        </div>
+        <div class="cart-footer">
+            <div class="left">
+                <input type="checkbox" id="select-all">
+                <label for="select-all">Pilih Semua</label>
+            </div>
+            <div class="right">
+                <p class="total-price">Total (0 produk): Rp0</p>
+                <a href="/chekout">
+                <button>Checkout</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="column">
+            <h3>MechX</h3>
+            <ul>
+                <li><a href="#">Tentang Kami</a></li>
+                <li><a href="#">Layanan Pelanggan</a></li>
+                <li><a href="#">Diskusi EB</a></li>
+                <li><a href="#">Karir</a></li>
+                <li><a href="#">Buletin</a></li>
+            </ul>
+        </div>
+        <div class="column">
+            <h3>Sumber Daya</h3>
+            <ul>
+                <li><a href="#">Pers</a></li>
+                <li><a href="#">Berita</a></li>
+                <li><a href="#">Partisipasi</a></li>
+                <li><a href="#">Pro Grosir</a></li>
+                <li><a href="#">Pencari Toko</a></li>
+            </ul>
+        </div>
+        <div class="column">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="#">Aksesibilitas</a></li>
+                <li><a href="#">Privasi</a></li>
+                <li><a href="#">Ketentuan</a></li>
+            </ul>
+        </div>
+        <div class="social-icons">
+            <span>Hubungi Kami:</span>
+            <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/jyn.amr" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@patricia_gurll" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.x.com" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.youtube.com/@GadgetIn" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>        
+    </footer>
+    <script ></script>
+</body>
+</html>
+<script >
+function formatCurrency(value) {
+    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value);
+}
+
+function updateCartSummary() {
+    const checkboxes = document.querySelectorAll('.item-checkbox');
+    let totalQuantity = 0;
+    let totalPrice = 0;
+
+    checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+            const item = checkbox.closest('.cart-item');
+            const priceText = item.querySelector('.price').textContent.replace('Rp', '').replace(',', '').trim();
+            const quantity = parseInt(item.querySelector('.item-quantity').value);
+            const price = parseFloat(priceText);
+
+            totalQuantity += quantity;
+            totalPrice += price * quantity;
+        }
+    });
+
+    // Update the total price display
+    document.querySelector('.total-price').textContent = `Total (${totalQuantity} produk): ${formatCurrency(totalPrice)}`;
+}
+
+// Event listeners for checkbox and quantity changes
+document.querySelectorAll('.item-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', updateCartSummary);
+});
+
+document.querySelectorAll('.item-quantity').forEach(input => {
+    input.addEventListener('input', updateCartSummary);
+});
+
+// Select all items functionality
+document.getElementById('select-all').addEventListener('change', function () {
+    const allChecked = this.checked;
+    document.querySelectorAll('.item-checkbox').forEach(checkbox => {
+        checkbox.checked = allChecked;
+    });
+    updateCartSummary();
+});
+
+</script>
